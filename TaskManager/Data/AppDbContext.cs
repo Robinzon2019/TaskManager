@@ -9,6 +9,6 @@ namespace TaskManager.Data
             
         }
 
-        public DbSet<Task> Courses { get; set; }
+        public DbSet<TaskManager.Models.Task> Tasks { get; set; }
     }
 }
