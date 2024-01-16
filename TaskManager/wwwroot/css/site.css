@@ -20,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h1 {
+    font-size: 1.5rem;
+}
+
+.btn-add-container {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}

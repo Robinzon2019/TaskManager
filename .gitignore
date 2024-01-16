@@ -2,6 +2,8 @@ bin/
 
 obj/
 
+.vs
+
 *.nuget.props
 *.paket.props
 *.paket.targets

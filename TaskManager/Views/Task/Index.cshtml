@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<TaskManager.Models.Task>
+
 @{
+    ViewData["title"] = "Lista de Tareas";
 }
+
+<h1>Lista de Tareas</h1>
+
+
+<div class="btn-add-container">
+    <a class="btn btn-info" asp-controller="Task" asp-action="Create">Crear Tareas</a>
+</div>
+
+<table class="table table-info">
+    <thead>
+        <tr>
+            <th scope="col">Número</th>
+            <th scope="col">Descrición</th>
+            <th scope="col">Fecha de Creación</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Prioridad</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var task in Model)
+        {
+            <tr>
+                <td>@task.Id</td>
+                <td>@task.Descripcion</td>
+                <td>@task.FechaCreacion</td>
+                <td>@task.Estado</td>
+                <td>@task.Prioridad</td>
+                <td>
+                    <a class="btn btn-warning">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <button type="button" class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
