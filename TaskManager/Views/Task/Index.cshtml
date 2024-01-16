@@ -7,40 +7,49 @@
 <h1>Lista de Tareas</h1>
 
 
-<div class="btn-add-container">
-    <a class="btn btn-info" asp-controller="Task" asp-action="Create">Crear Tareas</a>
+<div class="btn-add-container mt-5 mb-5">
+    <a class="btn btn-info" asp-controller="Task" asp-action="Create">Crear Tarea</a>
 </div>
 
-<table class="table table-info">
-    <thead>
-        <tr>
-            <th scope="col">Número</th>
-            <th scope="col">Descrición</th>
-            <th scope="col">Fecha de Creación</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Prioridad</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var task in Model)
-        {
+@if(Model.Count() > 0)
+{
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
             <tr>
-                <td>@task.Id</td>
-                <td>@task.Descripcion</td>
-                <td>@task.FechaCreacion</td>
-                <td>@task.Estado</td>
-                <td>@task.Prioridad</td>
-                <td>
-                    <a class="btn btn-warning">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                    <button type="button" class="btn btn-danger">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
+                <th scope="col">Número</th>
+                <th scope="col">Descrición</th>
+                <th scope="col">Fecha de Creación</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Prioridad</th>
+                <th scope="col"></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach(var task in Model)
+            {
+                <tr>
+                    <td>@task.Id</td>
+                    <td>@task.Descripcion</td>
+                    <td>@task.FechaCreacion</td>
+                    <td>@task.Estado</td>
+                    <td>@task.Prioridad</td>
+                    <td>
+                        <a class="btn btn-warning" asp-controller="Task" asp-action="Edit" asp-route-id="@task.Id">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a class="btn btn-danger" asp-controller="Task" asp-action="Delete" asp-route-id="@task.Id">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning text-center">
+        No hay tareas creadas.
+    </div>
+}

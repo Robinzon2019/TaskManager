@@ -3,9 +3,13 @@ using TaskManager.Data;
 
 namespace TaskManager.Services
 {
-    interface ITaskService
+    public interface ITaskService
     {
-
+        Task<List<Models.Task>> GetTasks();
+        Task Create(Models.Task task);
+        Task Edit(Models.Task task);
+        Task Delete(int id);
+        Task<Models.Task> GetTaskById(int id);
     }
 
     public class TaskService: ITaskService
@@ -17,7 +21,7 @@ namespace TaskManager.Services
             this._appDbContext = appDbContext;
         }
 
-        public async Task<List<TaskManager.Models.Task>> GetTask()
+        public async Task<List<TaskManager.Models.Task>> GetTasks()
         {
             List<TaskManager.Models.Task> tasks = new List<TaskManager.Models.Task>();
 
@@ -50,8 +54,18 @@ namespace TaskManager.Services
         {
             try
             {
-                _appDbContext.Tasks.Update(task);
-                await _appDbContext.SaveChangesAsync();
+
+                var taskObtained = await this.GetTaskById(task.Id);
+
+                if (taskObtained != null)
+                {
+                    taskObtained.Descripcion = task.Descripcion;
+                    taskObtained.FechaCreacion = task.FechaCreacion;
+                    taskObtained.Estado = task.Estado;
+                    taskObtained.Prioridad = task.Prioridad;
+                    await _appDbContext.SaveChangesAsync();
+                }
+
             }
             catch (Exception ex)
             {
@@ -75,6 +89,22 @@ namespace TaskManager.Services
             {
                 throw ex;
             }
+        }
+
+        public async Task<TaskManager.Models.Task> GetTaskById(int id)
+        {
+            TaskManager.Models.Task task = new TaskManager.Models.Task();
+
+            try
+            {
+                task = await _appDbContext.Tasks.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return task;
         }
     }
 }
